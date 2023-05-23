@@ -33,4 +33,40 @@ class RandomnessTester {
 
     return pValue >= 0.01;
   }
+
+
+  ///Implements monobit test for the bit string
+  static monobitTestForBinaryString(String binaryData) {
+    Uint8List data = RandomnessTester.binaryStringToUint8List(binaryData);
+    return RandomnessTester.monobitTest(data, binaryData.length);
+  }
+
+
+  ///Converts binaryStringToUint8List
+  static Uint8List binaryStringToUint8List(String binaryData) {
+    RegExp alphabet = RegExp("^[01]+");
+    if (!alphabet.hasMatch(binaryData)) {
+      throw ArgumentError(
+          "RandomnessTester: provided input must be a string of bits");
+    }
+    bool isNotMultiple8 = (binaryData.length & 7) != 0;
+    int byteLength = binaryData.length >> 3;
+    if (isNotMultiple8) {
+      byteLength++;
+    }
+
+    Uint8List data = Uint8List(byteLength);
+
+    int i = 0;
+    for (; i < (binaryData.length >> 3); i++) {
+      data[i] = int.parse(binaryData.substring(i << 3, (i << 3) + 8), radix: 2);
+    }
+
+    if (isNotMultiple8) {
+      data[i] = data[i] = int.parse(binaryData.substring(i << 3), radix: 2) <<
+          (8 - (binaryData.length & 7));
+    }
+
+    return data;
+  }
 }
