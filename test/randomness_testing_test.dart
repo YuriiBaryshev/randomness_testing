@@ -22,5 +22,23 @@ void main() {
       expect(RandomnessTester.monobitTest(all3BytesA), isTrue);
       expect(RandomnessTester.monobitTest(set4Bytes), isTrue);
     });
+
+
+    test('monobit test for binary string from NIST STS', () {
+      expect(RandomnessTester.monobitTestForBinaryString("1011010101"), isTrue);
+      expect(RandomnessTester.monobitTestForBinaryString("0100101010"), isTrue);
+    });
+
+
+    test('convert binary string into Uint8List', () {
+      Uint8List converted = RandomnessTester.binaryStringToUint8List("111");
+      expect(converted, Uint8List.fromList([0xe0]));
+      converted = RandomnessTester.binaryStringToUint8List("000000111");
+      expect(converted, Uint8List.fromList([3, 0x80]));
+      converted = RandomnessTester.binaryStringToUint8List("1111111000000111");
+      expect(converted, Uint8List.fromList([0xfe, 0x7]));
+      converted = RandomnessTester.binaryStringToUint8List("11111110000001111");
+      expect(converted, Uint8List.fromList([0xfe, 0x7, 0x80]));
+    });
   });
 }
