@@ -88,6 +88,69 @@ class RandomnessTester {
   }
 
 
+  ///Implements runs test of FIPS 140
+  static bool runsTest(Uint8List data) {
+    List<int> onesRuns = List.filled(6, 0), zerosRuns = List.filled(6, 0);
+    int onesRun = 0, zerosRun = 0;
+    for(int i = 0; i < data.length; i++) {
+      for (int mask = 0x80; mask != 0; mask = mask >> 1) {
+        if ((mask & data[i]) == mask) {
+          onesRun++;
+          if (zerosRun > 0) {
+            if ((zerosRun < 6)) {
+              zerosRuns[zerosRun - 1]++;
+            } else {
+              zerosRuns[5]++;
+            }
+          }
+          zerosRun = 0;
+        } else {
+          zerosRun++;
+          if (onesRun > 0) {
+            if (onesRun < 6) {
+              onesRuns[onesRun - 1]++;
+            } else {
+              onesRuns[5]++;
+            }
+          }
+          onesRun = 0;
+        }
+      }
+    }
+
+    if(zerosRun != 0) {
+      if(zerosRun < 6) {
+        zerosRuns[zerosRun - 1]++;
+      } else {
+        zerosRuns[5]++;
+      }
+    } else {
+      if(onesRun < 6) {
+        onesRuns[onesRun - 1]++;
+      } else {
+        onesRuns[5]++;
+      }
+    }
+
+    bool isPassed = true;
+
+    isPassed = isPassed && (zerosRuns[0] >= 2267) && (zerosRuns[0] <= 2733) &&
+        (onesRuns[0] >= 2267) && (onesRuns[0] <= 2733) &&
+        (zerosRuns[1] >= 1079) && (zerosRuns[1] <= 1421) &&
+        (onesRuns[1] >= 1079) && (onesRuns[1] <= 1421) &&
+        (zerosRuns[2] >= 502) && (zerosRuns[2] <= 748) &&
+        (onesRuns[2] >= 502) && (onesRuns[2] <= 748) &&
+        (zerosRuns[3] >= 223) && (zerosRuns[3] <= 402) &&
+        (onesRuns[3] >= 223) && (onesRuns[3] <= 402) &&
+        (zerosRuns[4] >= 90) && (zerosRuns[4] <= 223) &&
+        (onesRuns[4] >= 90) && (onesRuns[4] <= 223) &&
+        (zerosRuns[5] >= 90) && (zerosRuns[5] <= 223) &&
+        (onesRuns[5] >= 90) && (onesRuns[5] <= 223); //changed according to 2.4 of the task assignment
+
+    return isPassed;
+  }
+
+
   ///Implements monobit test for the bit string
   static monobitTestForBinaryString(String binaryData) {
     Uint8List data = RandomnessTester.binaryStringToUint8List(binaryData);
