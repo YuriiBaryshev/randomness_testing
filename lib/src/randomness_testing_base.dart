@@ -178,7 +178,7 @@ class RandomnessTester {
 
   ///Converts binaryStringToUint8List
   static Uint8List binaryStringToUint8List(String binaryData) {
-    RegExp alphabet = RegExp("^[01]+");
+    RegExp alphabet = RegExp("^[01]*\$");
     if (!alphabet.hasMatch(binaryData)) {
       throw ArgumentError(
           "RandomnessTester: provided input must be a string of bits");
