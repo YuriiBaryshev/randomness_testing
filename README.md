@@ -1,4 +1,6 @@
-Implements FIPS 140-3 random generator tests.
+# Randomness testing
+
+Dart implementation of FIPS 140-3 random generator tests.
 
 ## Features
 
