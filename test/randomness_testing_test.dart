@@ -39,6 +39,19 @@ void main() {
     });
 
 
+    test('poker test fails for all the same bits', () {
+      expect(RandomnessTester.pokerTest(allBytesZeros), isFalse);
+      expect(RandomnessTester.pokerTest(allBytesOnes), isFalse);
+      expect(RandomnessTester.pokerTest(allBytesA), isFalse);
+      expect(RandomnessTester.pokerTest(halfOnesHalfZeros), isFalse);
+    });
+
+
+    test('poker test passes for all the same bits', () {
+      expect(RandomnessTester.pokerTest(randomOutput), isTrue);
+    });
+
+
     test('convert binary string into Uint8List', () {
       Uint8List converted = RandomnessTester.binaryStringToUint8List("111");
       expect(converted, Uint8List.fromList([0xe0]));
