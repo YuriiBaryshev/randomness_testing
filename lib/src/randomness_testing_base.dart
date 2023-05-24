@@ -40,7 +40,7 @@ class RandomnessTester {
 
   ///Implements Poker test of FIPS 140
   static bool pokerTest(Uint8List data) {
-    List<int> g = List<int>.filled(15, 0, growable: false);
+    List<int> g = List<int>.filled(16, 0, growable: false);
     for(int i = 0; i < data.length; i++) {
       g[data[i] & 0xf]++;
       g[data[i] >> 4]++;
