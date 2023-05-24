@@ -26,16 +26,29 @@ void main() {
     });
 
 
-    test('fails for all the same bits', () {
+    test('monobit test fails for all the same bits', () {
       expect(RandomnessTester.monobitTest(allBytesZeros), isFalse);
       expect(RandomnessTester.monobitTest(allBytesOnes), isFalse);
     });
 
 
-    test('fails for all the same bits', () {
+    test('monobit test passes for all the same bits', () {
       expect(RandomnessTester.monobitTest(allBytesA), isTrue);
       expect(RandomnessTester.monobitTest(halfOnesHalfZeros), isTrue);
       expect(RandomnessTester.monobitTest(randomOutput), isTrue);
+    });
+
+
+    test('poker test fails for all the same bits', () {
+      expect(RandomnessTester.pokerTest(allBytesZeros), isFalse);
+      expect(RandomnessTester.pokerTest(allBytesOnes), isFalse);
+      expect(RandomnessTester.pokerTest(allBytesA), isFalse);
+      expect(RandomnessTester.pokerTest(halfOnesHalfZeros), isFalse);
+    });
+
+
+    test('poker test passes for all the same bits', () {
+      expect(RandomnessTester.pokerTest(randomOutput), isTrue);
     });
 
 

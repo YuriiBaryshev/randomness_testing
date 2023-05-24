@@ -34,7 +34,25 @@ class RandomnessTester {
       }
     }
 
-    return ((s > 9725) && (s < 10275));
+    return ((s > 9654) && (s < 10346)); //changed according to 2.1 of the task assignment
+  }
+
+
+  ///Implements Poker test of FIPS 140
+  static bool pokerTest(Uint8List data) {
+    List<int> g = List<int>.filled(16, 0, growable: false);
+    for(int i = 0; i < data.length; i++) {
+      g[data[i] & 0xf]++;
+      g[data[i] >> 4]++;
+    }
+    double x = 16/5000;
+    int sum = 0;
+    for(int i = 0; i < 16; i++) {
+      sum += g[i] * g[i];
+    }
+    x *= sum;
+    x -= 5000;
+    return (x > 1.03) && (x < 57.4); //changed according to 2.3 of the task assignment
   }
 
 
