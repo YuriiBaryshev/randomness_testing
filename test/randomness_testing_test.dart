@@ -12,7 +12,9 @@ void main() {
 
     Uint8List allBytesA = Uint8List(length);
     Uint8List halfOnesHalfZeros = Uint8List(length);
-    Uint8List randomOutput = Uint8List(length);
+    Uint8List randomOutput1 = Uint8List(length);
+    Uint8List randomOutput2 = Uint8List(length);
+    Uint8List randomOutput3 = Uint8List(length);
 
     setUp(() {
       var rand = Random.secure();
@@ -21,7 +23,9 @@ void main() {
         allBytesZeros[i] = 0;
         allBytesA[i] = 0xaa;
         halfOnesHalfZeros[i] = (i < 1250) ? 0xff : 0;
-        randomOutput[i] = rand.nextInt(256);
+        randomOutput1[i] = rand.nextInt(256);
+        randomOutput2[i] = rand.nextInt(256);
+        randomOutput3[i] = rand.nextInt(256);
       }
     });
 
@@ -35,7 +39,9 @@ void main() {
     test('monobit test passes for all the same bits', () {
       expect(RandomnessTester.monobitTest(allBytesA), isTrue);
       expect(RandomnessTester.monobitTest(halfOnesHalfZeros), isTrue);
-      expect(RandomnessTester.monobitTest(randomOutput), isTrue);
+      expect(RandomnessTester.monobitTest(randomOutput1), isTrue);
+      expect(RandomnessTester.monobitTest(randomOutput2), isTrue);
+      expect(RandomnessTester.monobitTest(randomOutput3), isTrue);
     });
 
 
@@ -48,7 +54,9 @@ void main() {
 
 
     test('poker test passes for all the same bits', () {
-      expect(RandomnessTester.pokerTest(randomOutput), isTrue);
+      expect(RandomnessTester.pokerTest(randomOutput1), isTrue);
+      expect(RandomnessTester.pokerTest(randomOutput2), isTrue);
+      expect(RandomnessTester.pokerTest(randomOutput3), isTrue);
     });
 
 
@@ -61,7 +69,9 @@ void main() {
 
     test('long run test passes', () {
       expect(RandomnessTester.longRunTest(allBytesA), isTrue);
-      expect(RandomnessTester.longRunTest(randomOutput), isTrue);
+      expect(RandomnessTester.longRunTest(randomOutput1), isTrue);
+      expect(RandomnessTester.longRunTest(randomOutput2), isTrue);
+      expect(RandomnessTester.longRunTest(randomOutput3), isTrue);
     });
 
 
@@ -74,7 +84,9 @@ void main() {
 
 
     test('runs test passes', () {
-      expect(RandomnessTester.runsTest(randomOutput), isTrue);
+      expect(RandomnessTester.runsTest(randomOutput1), isTrue);
+      expect(RandomnessTester.runsTest(randomOutput2), isTrue);
+      expect(RandomnessTester.runsTest(randomOutput3), isTrue);
     });
 
 
@@ -87,7 +99,9 @@ void main() {
 
 
     test('perform all tests passes', () {
-      expect(RandomnessTester.performAllTests(randomOutput), isTrue);
+      expect(RandomnessTester.performAllTests(randomOutput1), isTrue);
+      expect(RandomnessTester.performAllTests(randomOutput2), isTrue);
+      expect(RandomnessTester.performAllTests(randomOutput3), isTrue);
     });
 
 
