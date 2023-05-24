@@ -38,6 +38,23 @@ class RandomnessTester {
   }
 
 
+  ///Implements Poker test of FIPS 140
+  static bool pokerTest(Uint8List data) {
+    List<int> g = List<int>.filled(15, 0, growable: false);
+    for(int i = 0; i < data.length; i++) {
+      g[data[i] & 0xf]++;
+      g[data[i] >> 4]++;
+    }
+    double x = 16/5000;
+    int sum = 0;
+    for(int i = 0; i < 16; i++) {
+      sum += g[i] * g[i] - 5000;
+    }
+    x *= sum;
+    return (x > 2.16) && (x < 46.17);
+  }
+
+
   ///Implements monobit test for the bit string
   static monobitTestForBinaryString(String binaryData) {
     Uint8List data = RandomnessTester.binaryStringToUint8List(binaryData);
