@@ -1,8 +1,6 @@
-import 'dart:math';
 import 'dart:typed_data';
-import 'package:grizzly_distuv/math.dart';
 
-/// Checks if you are awesome. Spoiler: you are.
+/// Implements FIPS 140 statistical tests
 class RandomnessTester {
   ///Implements monobit test for the byte array/list
   static bool monobitTest(Uint8List data, [int? bitLength]) {
@@ -16,22 +14,27 @@ class RandomnessTester {
       throw ArgumentError("RandomnessTester: data is longer provided bitLength");
     }
 
-    int s = 0, j = bitLength;
-    for(int i = 0; i < data.length; i++) {
-      for (int mask = 0x80; mask != 0 && j != 0; mask = mask >> 1, j--) {
-        (mask & data[i]) == 0 ? s-- : s++;
+    int s = 0;
+    for(int i = 0; i < data.length - 1; i++) {
+      for (int mask = 0x80; mask != 0; mask = mask >> 1) {
+        if ((mask & data[i]) == mask) {
+          s++;
+        }
       }
     }
 
-    if(s < 0) {
-      s = -s;
+    int j = bitLength & 7;
+    if (j == 0) {
+      j = 8;
     }
 
-    double sObs = s / sqrt(bitLength);
+    for (int mask = 0x80; mask != 0 && j != 0; mask = mask >> 1, j--) {
+      if ((mask & data[data.length - 1]) == mask) {
+        s++;
+      }
+    }
 
-    double pValue = erfc(sObs/sqrt(2));
-
-    return pValue >= 0.01;
+    return ((s > 9725) && (s < 10275));
   }
 
 
