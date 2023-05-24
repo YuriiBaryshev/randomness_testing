@@ -52,6 +52,19 @@ void main() {
     });
 
 
+    test('long run test fails', () {
+      expect(RandomnessTester.longRunTest(allBytesZeros), isFalse);
+      expect(RandomnessTester.longRunTest(allBytesOnes), isFalse);
+      expect(RandomnessTester.longRunTest(halfOnesHalfZeros), isFalse);
+    });
+
+
+    test('long run test passes', () {
+      expect(RandomnessTester.longRunTest(allBytesA), isTrue);
+      expect(RandomnessTester.longRunTest(randomOutput), isTrue);
+    });
+
+
     test('convert binary string into Uint8List', () {
       Uint8List converted = RandomnessTester.binaryStringToUint8List("111");
       expect(converted, Uint8List.fromList([0xe0]));
