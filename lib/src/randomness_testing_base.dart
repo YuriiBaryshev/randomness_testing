@@ -40,6 +40,10 @@ class RandomnessTester {
 
   ///Implements Poker test of FIPS 140
   static bool pokerTest(Uint8List data) {
+    if(data.length != 2500) {
+      throw ArgumentError("RandomnessTester: data must be exactly 2500 bytes");
+    }
+
     List<int> g = List<int>.filled(16, 0, growable: false);
     for(int i = 0; i < data.length; i++) {
       g[data[i] & 0xf]++;
@@ -58,6 +62,10 @@ class RandomnessTester {
 
   ///Implements long run test of FIPS 140
   static bool longRunTest(Uint8List data) {
+    if(data.length != 2500) {
+      throw ArgumentError("RandomnessTester: data must be exactly 2500 bytes");
+    }
+
     int longestOnesRun = 0, longestZerosRun = 0, onesRun = 0, zerosRun = 0;
     for(int i = 0; i < data.length; i++) {
       for (int mask = 0x80; mask != 0; mask = mask >> 1) {
@@ -90,6 +98,10 @@ class RandomnessTester {
 
   ///Implements runs test of FIPS 140
   static bool runsTest(Uint8List data) {
+    if(data.length != 2500) {
+      throw ArgumentError("RandomnessTester: data must be exactly 2500 bytes");
+    }
+
     List<int> onesRuns = List.filled(6, 0), zerosRuns = List.filled(6, 0);
     int onesRun = 0, zerosRun = 0;
     for(int i = 0; i < data.length; i++) {
