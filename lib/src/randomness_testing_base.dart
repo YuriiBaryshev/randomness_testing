@@ -56,6 +56,38 @@ class RandomnessTester {
   }
 
 
+  ///Implements long run test of FIPS 140
+  static bool longRunTest(Uint8List data) {
+    int longestOnesRun = 0, longestZerosRun = 0, onesRun = 0, zerosRun = 0;
+    for(int i = 0; i < data.length; i++) {
+      for (int mask = 0x80; mask != 0; mask = mask >> 1) {
+        if ((mask & data[i]) == mask) {
+          onesRun++;
+          if (zerosRun > longestZerosRun) {
+            longestZerosRun = zerosRun;
+          }
+          zerosRun = 0;
+        } else {
+          zerosRun++;
+          if (onesRun > longestOnesRun) {
+            longestOnesRun = onesRun;
+          }
+          onesRun = 0;
+        }
+      }
+    }
+
+    if(zerosRun > longestZerosRun) {
+      longestZerosRun = zerosRun;
+    }
+    if(onesRun > longestOnesRun) {
+      longestOnesRun = onesRun;
+    }
+
+    return (longestOnesRun <= 36) && (longestZerosRun <= 36); //changed according to 2.2 of the task assignment
+  }
+
+
   ///Implements monobit test for the bit string
   static monobitTestForBinaryString(String binaryData) {
     Uint8List data = RandomnessTester.binaryStringToUint8List(binaryData);
