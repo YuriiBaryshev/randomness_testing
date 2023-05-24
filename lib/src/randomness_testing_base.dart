@@ -163,8 +163,14 @@ class RandomnessTester {
   }
 
 
+  ///Perform all tests
+  static bool performAllTests(Uint8List data) {
+    return monobitTest(data) && pokerTest(data) && runsTest(data) && longRunTest(data);
+  }
+
+
   ///Implements monobit test for the bit string
-  static monobitTestForBinaryString(String binaryData) {
+  static bool monobitTestForBinaryString(String binaryData) {
     Uint8List data = RandomnessTester.binaryStringToUint8List(binaryData);
     return RandomnessTester.monobitTest(data, binaryData.length);
   }
