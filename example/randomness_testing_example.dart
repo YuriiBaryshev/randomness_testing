@@ -9,7 +9,7 @@ void main() {
   for (int i = 0; i < 2500; i++) {
     randomOutput[i] = rand.nextInt(256);
   }
-  if (RandomnessTester.monobitTest(randomOutput)) {
+  if (RandomnessTester.performAllTests(randomOutput)) {
    print("Generated sequence passed tests");
   } else {
     print("Generated sequence didn't pass tests");
